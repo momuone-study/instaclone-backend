@@ -1,8 +1,9 @@
 // const { ApolloServer, gql } = require("apollo-server");
-require("dotenv").config();
-
+// require("dotenv").config();
 import schema from "./schema.js";
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
+import dotdev from "dotenv";
+dotdev.config();
 
 const server = new ApolloServer({
   schema,
