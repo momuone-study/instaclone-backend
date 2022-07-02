@@ -1,12 +1,23 @@
 // const { ApolloServer, gql } = require("apollo-server");
 // require("dotenv").config();
-import schema from "./schema.js";
+import schema from "./schema";
 import { ApolloServer } from "apollo-server";
 import dotdev from "dotenv";
+import { getUser, protectResolver } from "./users/users.utils";
 dotdev.config();
 
 const server = new ApolloServer({
   schema,
+  // context: {
+  //   token:
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjU2NzQ2MDY3fQ.rIcYlDiiWP3GAPu4Ml5I9_jUf5bAtL-e3OC3ktA3YJo",
+  // },
+  context: async ({ req }) => {
+    return {
+      loggedInUser: await getUser(req.headers.token),
+      protectResolver,
+    };
+  },
 });
 
 const PORT = process.env.PORT;
