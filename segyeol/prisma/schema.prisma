@@ -1,13 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -17,6 +16,12 @@ model User {
   username  String   @unique
   email     String   @unique
   password  String
+  bio       String?
+  avatar    String?
+  // followers User[]   @relation("FollowRelation", references: [id])
+  // following User[]   @relation("FollowRelation", references: [id])
+  followers User[]   @relation("FollowRelation")
+  following User[]   @relation("FollowRelation")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

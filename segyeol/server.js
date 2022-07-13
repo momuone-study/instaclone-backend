@@ -1,13 +1,19 @@
 // const { ApolloServer, gql } = require("apollo-server");
 // require("dotenv").config();
-import schema from "./schema";
-import { ApolloServer } from "apollo-server";
+import { typeDefs, resolvers } from "./schema";
+// import { ApolloServer } from "apollo-server";
 import dotdev from "dotenv";
 import { getUser, protectResolver } from "./users/users.utils";
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import logger from "morgan";
+
 dotdev.config();
 
-const server = new ApolloServer({
-  schema,
+const graphql = new ApolloServer({
+  // schema,
+  resolvers,
+  typeDefs,
   // context: {
   //   token:
   //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjU2NzQ2MDY3fQ.rIcYlDiiWP3GAPu4Ml5I9_jUf5bAtL-e3OC3ktA3YJo",
@@ -15,15 +21,25 @@ const server = new ApolloServer({
   context: async ({ req }) => {
     return {
       loggedInUser: await getUser(req.headers.token),
-      protectResolver,
+      // protectResolver,
     };
   },
 });
 
 const PORT = process.env.PORT;
-server
-  .listen(PORT)
-  .then(() => console.log(`Server is running on http://localhost:${PORT}/")`));
+
+const app = express();
+app.use(logger("tiny"));
+graphql.applyMiddleware({ app });
+app.use("/static", express.static("upload"));
+
+app.listen({ port: PORT }, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+// server
+//   .listen(PORT)
+//   .then(() => console.log(`Server is running on http://localhost:${PORT}/")`));
 
 // babel 설치. javascript compiler. 최신 ecma 코드들을 변환해줌. (node.js 버전에 대한 제약 사라짐)
 //  npm install --save-dev @babel/core

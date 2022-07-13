@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node server",
+    "dev": "nodemon --exec babel-node server --delay 2",
     "migrate": "npx prisma migrate dev --preview-feature",
     "studio": "npx prisma studio"
   },
@@ -17,11 +17,13 @@
     "@graphql-tools/schema": "8.5.0",
     "@prisma/client": "4.0.0",
     "apollo-server": "2.25.2",
+    "apollo-server-express": "2.19.2",
     "bcrypt": "5.0.1",
     "dotenv": "16.0.1",
     "graphql": "15.8.0",
     "graphql-tools": "7.0.2",
     "jsonwebtoken": "8.5.1",
+    "morgan": "1.10.0",
     "postcss": "8.4.14"
   },
   "devDependencies": {
