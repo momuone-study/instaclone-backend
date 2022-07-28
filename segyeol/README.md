@@ -8,9 +8,12 @@ Instaclone Backend.
 - [x] See Profile
 - [x] Login
 - [x] Edit Profile
-- [ ] Follow User
-- [ ] UnFollow User
-- [ ] Change Avatar
+- [x] Change Avatar
+- [x] Follow User
+- [x] UnFollow User
+- [] See Followers and See Following Pagination
+- [] Computed Fields
+- [] Search Users
 
 #### FILE UPLOAD
 
@@ -83,3 +86,9 @@ self referencing : 같은 이름을 가져야함.
 ```
 
 graphQL로 follow/unfollow 진행
+
+#### Pagination
+
+1. offset pagination
+
+2. cursor based pagination
